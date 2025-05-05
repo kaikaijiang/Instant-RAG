@@ -2,6 +2,9 @@
 
 An AI-powered multi-project RAG (Retrieval-Augmented Generation) system.
 
+![Document upload](https://github.com/kaikaijiang/Instant-RAG/blob/main/instant-rag-ui/web_example.png)
+![Chat with document](https://github.com/kaikaijiang/Instant-RAG/blob/main/instant-rag-ui/web_example_chat.png)
+
 ## Features
 
 - Create and manage multiple RAG projects
