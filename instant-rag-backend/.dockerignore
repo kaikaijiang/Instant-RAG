@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.venv/
+
+# Docker
+.docker/
+Dockerfile
+.dockerignore
+
+# Git
+.git/
+.gitignore
+
+# Environment variables
+.env
+
+# Data directories (will be mounted as volumes)
+uploads/
+data/
+logs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Misc
+.DS_Store

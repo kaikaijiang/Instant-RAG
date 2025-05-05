@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./instant-rag-ui
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+      - NEXT_PUBLIC_USE_MOCK_API=false
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=http://localhost:3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./instant-rag-backend
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db/instant_rag
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=False
+    volumes:
+      - ./instant-rag-backend/uploads:/app/uploads
+      - ./instant-rag-backend/data:/app/data
+      - ./instant-rag-backend/logs:/app/logs
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=instant_rag
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./instant-rag-backend/.docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
